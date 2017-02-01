@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Home
+{% endblock %}
+
+{% block body_block %}
+    <noscript>
+        <p>It seems like you have deactivated JavaScript. Please activate it to use this website.</p> <br/>
+    </noscript>
+
+    {% if user.is_authenticated %}
+        <p>Hey {{ user.username }}! Welcome back. :)</p>
+    {% else %}
+        <p>Hello! Welcome to our free meditation timer.<br/>Sign Up to save your sessions and view statistics.</p>
+    {% endif %}
+
+    <div class="jumbotron">
+        <div id="clockdiv">
+            <div>
+                <span class="hours" />
+                <div class="smalltext">Hours</div>
+            </div>
+            <div>
+                <span class="minutes" />
+                <div class="smalltext">Minutes</div>
+            </div>
+            <div>
+                <span class="seconds" />
+                <div class="smalltext">Seconds</div>
+            </div>
+        </div>
+        <div id="timeInputDiv">
+            <form method="post" action="{% url 'index' %}">
+                {% csrf_token %}
+                <input id="timeInput" name='time' type="number" min="0" step="any"/>
+                <label id="timeInputLabel" for="timeInput"> min</label>
+                <input id="startTimerBtn" type="button" value="Start" onclick="onStartTimerBtnPress()" />
+                {% if user.is_authenticated %}
+                <input id="save" type="submit" name="submit" value="Save Session" style="margin-top: 20px; !important;"/>
+                {% endif %}
+                <p id="saveTimeP" style="display: none;"/>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Blog
+{% endblock %}
+
+{% block body_block %}
+    <div class="container">
+    {% for blogpost in blogposts %}
+        <div class="blogpost">
+            <h1>{{ blogpost.title }}</h1> {{ blogpost.pub_date }}<br />
+            <div class="row">
+                {% autoescape off %}{{ blogpost.content }}{% endautoescape %}
+            </div>
+        </div>
+        <hr />
+    {% endfor %}
+    </div>
+{% endblock %}
